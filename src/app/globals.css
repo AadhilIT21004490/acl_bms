@@ -1,26 +1,146 @@
 @import "tailwindcss";
+@source "../";
+
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-inter: 'Inter', system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  font-family: var(--font-inter);
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #020617; /* slate-950 */
+  color: #f1f5f9; /* slate-100 */
+}
+
+/* ========================
+   Custom scrollbar
+======================== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6366f1;
+}
+
+/* ========================
+   Quill Editor Overrides
+======================== */
+.ql-toolbar {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  border-radius: 12px 12px 0 0 !important;
+}
+.ql-toolbar .ql-stroke {
+  stroke: #94a3b8 !important;
+}
+.ql-toolbar .ql-fill {
+  fill: #94a3b8 !important;
+}
+.ql-toolbar .ql-picker {
+  color: #94a3b8 !important;
+}
+.ql-toolbar button:hover .ql-stroke,
+.ql-toolbar .ql-active .ql-stroke {
+  stroke: #6366f1 !important;
+}
+.ql-toolbar button:hover .ql-fill,
+.ql-toolbar .ql-active .ql-fill {
+  fill: #6366f1 !important;
+}
+.ql-toolbar button:hover,
+.ql-toolbar .ql-active {
+  background: rgba(99, 102, 241, 0.1) !important;
+  border-radius: 4px;
+}
+.ql-container {
+  background: #0f172a !important;
+  border-color: #334155 !important;
+  border-radius: 0 0 12px 12px !important;
+  font-family: var(--font-inter) !important;
+  font-size: 1rem !important;
+  min-height: 280px;
+}
+.ql-editor {
+  color: #e2e8f0 !important;
+  min-height: 280px !important;
+  line-height: 1.75 !important;
+}
+.ql-editor.ql-blank::before {
+  color: #475569 !important;
+  font-style: italic;
+}
+.ql-editor h1, .ql-editor h2, .ql-editor h3 {
+  color: #f8fafc !important;
+  font-weight: 700;
+}
+.ql-editor a { color: #6366f1 !important; }
+.ql-editor code, .ql-editor pre {
+  background: #1e293b !important;
+  color: #a5b4fc !important;
+  border-radius: 6px;
+}
+.ql-editor blockquote {
+  border-left: 4px solid #6366f1 !important;
+  color: #94a3b8 !important;
+  background: #1e293b !important;
+  padding: 12px 16px !important;
+  border-radius: 0 8px 8px 0 !important;
+}
+
+/* ========================
+   Skeleton animation
+======================== */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #1e293b 25%,
+    #334155 50%,
+    #1e293b 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* ========================
+   Gradient text utility
+======================== */
+.gradient-text {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========================
+   Glass card utility
+======================== */
+.glass-card {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  border-radius: 16px;
 }
