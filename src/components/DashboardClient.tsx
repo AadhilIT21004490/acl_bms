@@ -95,14 +95,14 @@ export default function DashboardClient() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  const [posts,      setPosts]      = useState<Post[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [pagination, setPagination] = useState<Pagination>({ total: 0, page: 1, limit: 10, totalPages: 1 });
-  const [stats,      setStats]      = useState({ total: 0, published: 0, draft: 0, trash: 0 });
-  const [loading,    setLoading]    = useState(true);
+  const [stats, setStats] = useState({ total: 0, published: 0, draft: 0, trash: 0 });
+  const [loading, setLoading] = useState(true);
 
-  const [search,       setSearch]       = useState('');
+  const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('');
-  const [page,         setPage]         = useState(1);
+  const [page, setPage] = useState(1);
 
   // Confirm modal state
   const [confirm, setConfirm] = useState<{
@@ -114,9 +114,9 @@ export default function DashboardClient() {
     if (!opts?.silent) setLoading(true);
     try {
       const params = new URLSearchParams({
-        page:  String(page),
+        page: String(page),
         limit: '10',
-        ...(search       && { search }),
+        ...(search && { search }),
         ...(statusFilter && { status: statusFilter }),
       });
       const res = await fetch(`/api/posts?${params}`);
@@ -139,10 +139,10 @@ export default function DashboardClient() {
         fetch('/api/posts?limit=1&status=Trash').then(r => r.json()),
       ]);
       setStats({
-        total:     all.pagination?.total ?? 0,
+        total: all.pagination?.total ?? 0,
         published: pub.pagination?.total ?? 0,
-        draft:     draft.pagination?.total ?? 0,
-        trash:     trash.pagination?.total ?? 0,
+        draft: draft.pagination?.total ?? 0,
+        trash: trash.pagination?.total ?? 0,
       });
     } catch { /* silent */ }
   }, []);
@@ -153,7 +153,7 @@ export default function DashboardClient() {
   useEffect(() => {
     const t = setTimeout(() => { setPage(1); fetchPosts(); }, 350);
     return () => clearTimeout(t);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   // ── Actions ────────────────────────────────────────────────────────────────
@@ -183,10 +183,10 @@ export default function DashboardClient() {
   };
 
   const filterButtons: { label: string; value: StatusFilter; count: number }[] = [
-    { label: 'All',       value: '',          count: stats.total },
+    { label: 'All', value: '', count: stats.total },
     { label: 'Published', value: 'Published', count: stats.published },
-    { label: 'Draft',     value: 'Draft',     count: stats.draft },
-    { label: 'Trash',     value: 'Trash',     count: stats.trash },
+    { label: 'Draft', value: 'Draft', count: stats.draft },
+    { label: 'Trash', value: 'Trash', count: stats.trash },
   ];
 
   const modalConfig = {
@@ -248,10 +248,10 @@ export default function DashboardClient() {
 
       {/* ── Stats Row ──────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Total Posts"  value={stats.total}     icon={Layers}    color="bg-indigo-600/20 text-indigo-400"  loading={loading} />
-        <StatCard label="Published"    value={stats.published} icon={Globe}     color="bg-emerald-600/20 text-emerald-400" loading={loading} />
-        <StatCard label="Drafts"       value={stats.draft}     icon={FileText}  color="bg-amber-600/20 text-amber-400"    loading={loading} />
-        <StatCard label="In Trash"     value={stats.trash}     icon={Archive}   color="bg-red-600/20 text-red-400"        loading={loading} />
+        <StatCard label="Total Posts" value={stats.total} icon={Layers} color="bg-indigo-600/20 text-indigo-400" loading={loading} />
+        <StatCard label="Published" value={stats.published} icon={Globe} color="bg-emerald-600/20 text-emerald-400" loading={loading} />
+        <StatCard label="Drafts" value={stats.draft} icon={FileText} color="bg-amber-600/20 text-amber-400" loading={loading} />
+        <StatCard label="In Trash" value={stats.trash} icon={Archive} color="bg-red-600/20 text-red-400" loading={loading} />
       </div>
 
       {/* ── Filters & Search ───────────────────────────────────────── */}
@@ -305,7 +305,7 @@ export default function DashboardClient() {
               <tr className="border-b border-white/5 bg-slate-900/20">
                 <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Post</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden md:table-cell">Date</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden lg:table-cell">Tags</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden lg:table-cell">Author</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
               </tr>
@@ -369,9 +369,12 @@ export default function DashboardClient() {
                     <td className="px-4 py-3.5 hidden md:table-cell">
                       <span className="text-slate-400 text-xs">{post.date}</span>
                     </td>
+                    <td className="px-4 py-3.5 hidden md:table-cell">
+                      <span className="text-slate-400 text-xs">{post.authorId.name}</span>
+                    </td>
 
                     {/* Tags */}
-                    <td className="px-4 py-3.5 hidden lg:table-cell">
+                    {/* <td className="px-4 py-3.5 hidden lg:table-cell">
                       <div className="flex flex-wrap gap-1">
                         {post.tags.slice(0, 3).map(tag => (
                           <span
@@ -390,7 +393,7 @@ export default function DashboardClient() {
                           <span className="text-slate-600 text-xs">—</span>
                         )}
                       </div>
-                    </td>
+                    </td> */}
 
                     {/* Status */}
                     <td className="px-4 py-3.5">

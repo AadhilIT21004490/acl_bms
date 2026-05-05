@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
+import logo from '../../public/Logo BW.png';
 import { signOut } from 'next-auth/react';
 import {
   LayoutDashboard, PenSquare, User, LogOut,
@@ -19,8 +21,8 @@ interface AdminSidebarProps {
 
 const navItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/posts/new', label: 'New Post',  icon: PenSquare },
-  { href: '/admin/profile',   label: 'Profile',   icon: User },
+  { href: '/admin/posts/new', label: 'New Post', icon: PenSquare },
+  { href: '/admin/profile', label: 'Profile', icon: User },
 ];
 
 function SidebarContent({
@@ -37,11 +39,20 @@ function SidebarContent({
       <div className="flex items-center justify-between px-6 py-5 border-b border-white/5">
         <div className="flex items-center gap-3">
           <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-indigo-600 flex-shrink-0">
-            <Newspaper className="w-5 h-5 text-white" />
+            {/* <Newspaper className="w-5 h-5 text-white" /> */}
+            <Image
+              src={logo}
+              alt="ACL Academy"
+              width={85}
+              height={85}
+              className="w-6 h-6"
+              priority
+              unoptimized
+            />
           </div>
           <div>
-            <p className="text-sm font-bold text-slate-100 leading-none">NewsManager</p>
-            <p className="text-xs text-slate-500 mt-0.5">Admin Panel</p>
+            <p className="text-sm font-bold text-slate-100 leading-none">News Manager</p>
+            <p className="text-xs text-slate-500 mt-0.5">ACL Academy</p>
           </div>
         </div>
         {onClose && (

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import LoginForm from '@/components/LoginForm';
-import { Newspaper } from 'lucide-react';
+// import { Newspaper } from 'lucide-react';
+import Image from 'next/image';
+import logo from '../../../public/Logo BW.png';
 
 export const metadata: Metadata = {
   title: 'Sign In | News Management',
@@ -20,9 +22,18 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
           <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-indigo-600 mb-4 shadow-lg shadow-indigo-600/30">
-            <Newspaper className="w-7 h-7 text-white" />
+            {/* <Newspaper className="w-7 h-7 text-white" /> */}
+            <Image
+              src={logo}
+              alt="ACL Academy"
+              width={85}
+              height={85}
+              className="w-10 h-10"
+              priority
+              unoptimized
+            />
           </div>
-          <h1 className="text-2xl font-bold text-slate-100">NewsManager</h1>
+          <h1 className="text-2xl font-bold text-slate-100">News Manager</h1>
           <p className="text-sm text-slate-500 mt-1">Sign in to your admin account</p>
         </div>
 
