@@ -146,7 +146,7 @@ export default function PostForm({ initialData, mode = 'create' }: PostFormProps
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter post title..."
-            className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+            className="w-full px-4 py-3 rounded-xl bg-slate-900/50 border border-white/10 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all glow-input"
             required
           />
         </div>
@@ -157,7 +157,7 @@ export default function PostForm({ initialData, mode = 'create' }: PostFormProps
           <div
             onClick={handleImageUpload}
             className={`relative cursor-pointer group rounded-xl border-2 border-dashed transition-all overflow-hidden
-              ${mainImage ? 'border-indigo-500/50' : 'border-slate-700 hover:border-indigo-500/60'}
+              ${mainImage ? 'border-indigo-500/50' : 'border-white/10 hover:border-indigo-500/60'}
               ${uploading ? 'opacity-70 pointer-events-none' : ''}
             `}
             style={{ minHeight: '200px' }}
@@ -209,7 +209,7 @@ export default function PostForm({ initialData, mode = 'create' }: PostFormProps
         <div className="space-y-3">
           <label className="block text-sm font-medium text-slate-300">Tags</label>
           <div className="flex gap-2">
-            <div className="flex-1 flex items-center gap-2 px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-transparent transition-all">
+            <div className="flex-1 flex items-center gap-2 px-4 py-3 rounded-xl bg-slate-900/50 border border-white/10 focus-within:ring-2 focus-within:ring-indigo-500/50 transition-all glow-input">
               <Tag className="w-4 h-4 text-slate-500 flex-shrink-0" />
               <input
                 id="tag-input"
@@ -224,7 +224,7 @@ export default function PostForm({ initialData, mode = 'create' }: PostFormProps
             <button
               type="button"
               onClick={addTag}
-              className="px-4 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors"
+              className="px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-sm font-medium transition-colors"
             >
               Add
             </button>
@@ -256,7 +256,7 @@ export default function PostForm({ initialData, mode = 'create' }: PostFormProps
           {/* Status selector */}
           <div className="flex items-center gap-3">
             <span className="text-sm text-slate-400">Status:</span>
-            <div className="flex rounded-xl overflow-hidden border border-slate-700">
+            <div className="flex rounded-xl overflow-hidden border border-white/10">
               {(['Draft', 'Published'] as const).map((s) => (
                 <button
                   key={s}
@@ -267,7 +267,7 @@ export default function PostForm({ initialData, mode = 'create' }: PostFormProps
                       ? s === 'Published'
                         ? 'bg-emerald-600 text-white'
                         : 'bg-slate-600 text-white'
-                      : 'bg-slate-900 text-slate-400 hover:text-slate-200'
+                      : 'bg-slate-900/50 text-slate-400 hover:text-slate-200'
                   }`}
                 >
                   {s}
@@ -281,7 +281,7 @@ export default function PostForm({ initialData, mode = 'create' }: PostFormProps
             <button
               type="button"
               onClick={() => router.back()}
-              className="px-5 py-2.5 rounded-xl border border-slate-700 text-slate-300 hover:bg-slate-800 text-sm font-medium transition-colors"
+              className="px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 text-slate-300 hover:bg-white/10 text-sm font-medium transition-colors"
             >
               Cancel
             </button>
@@ -289,7 +289,7 @@ export default function PostForm({ initialData, mode = 'create' }: PostFormProps
               type="submit"
               disabled={saving}
               onClick={(e) => { setPostStatus(postStatus); }}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-medium transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 shadow-[0_0_20px_rgba(99,102,241,0.3)] hover:shadow-[0_0_25px_rgba(99,102,241,0.5)] border border-white/10 disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-medium transition-all"
             >
               {saving && <Loader2 className="w-4 h-4 animate-spin" />}
               {saving ? 'Saving...' : mode === 'edit' ? 'Update Post' : `Save as ${postStatus}`}

@@ -38,13 +38,15 @@ function StatCard({
 }) {
   if (loading) return <div className="skeleton h-24 rounded-2xl" />;
   return (
-    <div className="glass-card p-5 flex items-center gap-4 hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-500/10 transition-all duration-300">
-      <div className={`flex-shrink-0 flex items-center justify-center w-11 h-11 rounded-xl ${color}`}>
-        <Icon className="w-5 h-5" />
+    <div className="glass-card p-5 flex items-center gap-4 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)] transition-all duration-300 relative overflow-hidden group">
+      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none" />
+      <div className={`flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-xl relative ${color}`}>
+        <div className="absolute inset-0 bg-current opacity-20 rounded-xl blur-md group-hover:opacity-40 transition-opacity" />
+        <Icon className="w-6 h-6 relative z-10" />
       </div>
-      <div>
-        <p className="text-2xl font-bold text-slate-100">{value}</p>
-        <p className="text-xs text-slate-500 mt-0.5">{label}</p>
+      <div className="relative z-10">
+        <p className="text-3xl font-bold text-white tracking-tight">{value}</p>
+        <p className="text-sm text-slate-400 mt-0.5 font-medium">{label}</p>
       </div>
     </div>
   );
@@ -236,7 +238,7 @@ export default function DashboardClient() {
           </button>
           <Link
             href="/admin/posts/new"
-            className="flex items-center gap-2 px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition-all shadow-lg shadow-indigo-600/20"
+            className="flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white text-sm font-semibold transition-all shadow-[0_0_20px_rgba(99,102,241,0.3)] hover:shadow-[0_0_25px_rgba(99,102,241,0.5)] border border-white/10"
           >
             <PenSquare className="w-4 h-4" />
             New Post
@@ -260,15 +262,16 @@ export default function DashboardClient() {
             <button
               key={value}
               onClick={() => { setStatusFilter(value); setPage(1); }}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all relative overflow-hidden
                 ${statusFilter === value
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                  ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-[0_0_15px_rgba(99,102,241,0.2)]'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-transparent'
                 }`}
             >
-              {label}
-              <span className={`px-1.5 py-0.5 rounded-full text-xs leading-none
-                ${statusFilter === value ? 'bg-white/20 text-white' : 'bg-slate-700 text-slate-400'}`}>
+              {statusFilter === value && <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-transparent" />}
+              <span className="relative z-10">{label}</span>
+              <span className={`px-1.5 py-0.5 rounded-full text-xs leading-none relative z-10
+                ${statusFilter === value ? 'bg-indigo-500/30 text-indigo-200' : 'bg-slate-800 text-slate-400'}`}>
                 {count}
               </span>
             </button>
@@ -276,7 +279,7 @@ export default function DashboardClient() {
         </div>
 
         {/* Search */}
-        <div className="flex-1 flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 focus-within:ring-2 focus-within:ring-indigo-500 transition-all">
+        <div className="flex-1 flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-900/50 border border-white/5 focus-within:ring-2 focus-within:ring-indigo-500/50 transition-all glow-input">
           <Search className="w-4 h-4 text-slate-500 flex-shrink-0" />
           <input
             id="dashboard-search"
@@ -284,7 +287,7 @@ export default function DashboardClient() {
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search posts by title…"
-            className="flex-1 bg-transparent text-sm text-slate-100 placeholder-slate-600 focus:outline-none"
+            className="flex-1 bg-transparent text-sm text-slate-100 placeholder-slate-500 focus:outline-none"
           />
           {search && (
             <button onClick={() => setSearch('')} className="text-slate-500 hover:text-slate-300 transition-colors">
@@ -299,7 +302,7 @@ export default function DashboardClient() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-slate-800 bg-slate-900/60">
+              <tr className="border-b border-white/5 bg-slate-900/20">
                 <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Post</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden md:table-cell">Date</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider hidden lg:table-cell">Tags</th>
@@ -333,7 +336,7 @@ export default function DashboardClient() {
                 posts.map(post => (
                   <tr
                     key={post._id}
-                    className="border-b border-slate-800/60 hover:bg-slate-800/40 hover:-translate-y-[1px] hover:shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-all duration-300 group"
+                    className="border-b border-white/5 hover:bg-white/[0.02] hover:shadow-[0_4px_15px_rgba(0,0,0,0.2)] transition-all duration-300 group"
                   >
                     {/* Post Title + Image */}
                     <td className="px-4 py-3.5">
@@ -452,7 +455,7 @@ export default function DashboardClient() {
 
         {/* ── Pagination ─────────────────────────────────────────────── */}
         {pagination.totalPages > 1 && (
-          <div className="flex items-center justify-between px-4 py-3 border-t border-slate-800 bg-slate-900/40">
+          <div className="flex items-center justify-between px-4 py-3 border-t border-white/5 bg-slate-900/20">
             <p className="text-xs text-slate-500">
               Showing {((page - 1) * pagination.limit) + 1}–{Math.min(page * pagination.limit, pagination.total)} of {pagination.total}
             </p>

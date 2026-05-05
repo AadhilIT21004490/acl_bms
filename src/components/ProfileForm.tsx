@@ -87,7 +87,7 @@ export default function ProfileForm() {
         <div className="flex items-center gap-5">
           <div
             onClick={handleImageUpload}
-            className="relative w-20 h-20 rounded-2xl overflow-hidden cursor-pointer group flex-shrink-0 border-2 border-slate-700 hover:border-indigo-500 transition-all"
+            className="relative w-20 h-20 rounded-2xl overflow-hidden cursor-pointer group flex-shrink-0 border-2 border-white/10 hover:border-indigo-500 transition-all shadow-[0_0_15px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(99,102,241,0.3)]"
           >
             {image ? (
               <>
@@ -127,7 +127,7 @@ export default function ProfileForm() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Your display name"
-              className="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm"
+              className="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-900/50 border border-white/10 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all text-sm glow-input"
             />
           </div>
         </div>
@@ -143,7 +143,7 @@ export default function ProfileForm() {
               type="email"
               value={session?.user?.email ?? ''}
               readOnly
-              className="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-800/50 border border-slate-800 text-slate-500 cursor-not-allowed text-sm"
+              className="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-800/20 border border-white/5 text-slate-500 cursor-not-allowed text-sm"
             />
           </div>
         </div>
@@ -152,7 +152,7 @@ export default function ProfileForm() {
         <button
           type="submit"
           disabled={saving}
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm transition-all shadow-lg shadow-indigo-600/20"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 shadow-[0_0_20px_rgba(99,102,241,0.3)] hover:shadow-[0_0_25px_rgba(99,102,241,0.5)] border border-white/10 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm transition-all"
         >
           {saving && <Loader2 className="w-4 h-4 animate-spin" />}
           {saving ? 'Saving...' : 'Save Changes'}
